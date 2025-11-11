@@ -5,7 +5,7 @@ import { UserModule } from './modules/user/user.module';
 import { CourseModule } from './modules/course/course.module';
 import { ProfessorModule } from './modules/professor/professor.module';
 import { StudentModule } from './modules/student/student.module';
-import { RegistrationModule } from './modules/registration/registration.module';
+import { EnrollmentModule } from './modules/enrollment/enrollment.module';
 
 @Module({
   imports: [
@@ -22,7 +22,8 @@ import { RegistrationModule } from './modules/registration/registration.module';
         username: process.env.DB_USER,
         password: process.env.DB_PASS,
         autoLoadEntities: true,
-        synchronize: true
+        synchronize: true,
+        logging: true,
       }
     ),
 
@@ -30,11 +31,13 @@ import { RegistrationModule } from './modules/registration/registration.module';
 
     CourseModule,
 
-    RegistrationModule,
+    EnrollmentModule,
 
     StudentModule,
 
-    ProfessorModule
+    ProfessorModule,
+
+    EnrollmentModule
   ],
 })
 export class AppModule {}
