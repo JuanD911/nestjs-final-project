@@ -1,7 +1,7 @@
 import { IsEmail, IsEnum, IsOptional, IsString, MinLength } from "class-validator";
 import { UserTypes } from "../interfaces/userTypes";
 
-export class CreateUser {
+export class CreateUserDto {
 
     @IsString()
     @IsOptional()
