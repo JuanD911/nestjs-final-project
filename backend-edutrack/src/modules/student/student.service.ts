@@ -77,10 +77,17 @@ export class StudentService {
   }
 
   async remove(id: string) {
-    const student = await this.StudentRepository.findOne({
-      where: {id}});
-    await this.StudentRepository.delete(student!);
-    return `Student with id ${id} has been deleted`;
+    const user = await this.StudentRepository.findOne({ where: { id } });
+
+    if (!user)
+      throw new NotFoundException(`Student with id ${id} not found`);
+
+    try {
+      await this.StudentRepository.remove(user);
+      return `Student with id ${id} has been deleted`;
+    } catch (error) {
+      this.handlerErrors(error);
+    }
   }
 
   handlerErrors(error: any){
