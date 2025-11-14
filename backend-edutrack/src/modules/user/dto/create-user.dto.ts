@@ -9,7 +9,7 @@ export class CreateUserDto {
 
     @IsOptional()
     @IsEmail()
-    correo: string
+    email: string
 
     @IsOptional()
     @MinLength(8)
