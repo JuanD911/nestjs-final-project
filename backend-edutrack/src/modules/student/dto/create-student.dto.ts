@@ -6,7 +6,7 @@ export class CreateStudentDto {
 
     @IsOptional()
     @IsNumber()
-    entry_year: number;
+    entryYear: number;
 
     @IsOptional()
     @Type(() => CreateUserDto)
