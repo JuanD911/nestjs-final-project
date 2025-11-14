@@ -1,98 +1,204 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 📘 Proyecto EduTrack – Backend NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend desarrollado en **NestJS + TypeORM + PostgreSQL** para la gestión de:
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- Usuarios  
+- Estudiantes  
+- Profesores  
+- Cursos  
+- Inscripciones  
 
-## Description
+Proyecto presentado como entrega del curso **Desarrollo Backend con NestJS**.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🚀 Tecnologías utilizadas
 
-```bash
-$ npm install
+- **NestJS** (Framework Backend)
+- **TypeORM** (ORM)
+- **PostgreSQL** (Base de datos)
+- **Class-validator / class-transformer** (DTOs)
+- **bcrypt** (Encriptación de contraseñas)
+- **UUID v4** (Identificadores únicos)
+
+---
+
+## 📦 Requisitos previos
+
+Antes de ejecutar el proyecto asegúrate de tener instalado:
+
+- Node.js (>= 18)
+- npm (>= 9)
+- PostgreSQL (>= 13)
+- Nest CLI:
+
+```
+npm i -g @nestjs/cli
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+## 📁 Instalación del proyecto
 
-# watch mode
-$ npm run start:dev
+### 1️⃣ Clonar el repositorio
 
-# production mode
-$ npm run start:prod
+```
+git clone <URL-DEL-REPOSITORIO>
+cd <NOMBRE_DEL_PROYECTO>
 ```
 
-## Run tests
+### 2️⃣ Instalar dependencias
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+npm install
 ```
 
-## Deployment
+### 3️⃣ Crear archivo `.env`
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Crea un archivo `.env` en la raíz del proyecto:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=tu_contraseña
+DB_NAME=nombre_bd
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+PORT=3000
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## 🗄️ Configuración de TypeORM
 
-Check out a few resources that may come in handy when working with NestJS:
+Configuración en `app.module.ts`:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```ts
+TypeOrmModule.forRoot({
+  type: 'postgres',
+  host: process.env.DB_HOST,
+  port: +process.env.DB_PORT,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  autoLoadEntities: true,
+  synchronize: true,   // ⚠️ Solo para desarrollo
+})
+```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🏃 Ejecutar el proyecto
 
-## Stay in touch
+### Modo desarrollo:
+```
+npm run start:dev
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Modo producción:
+```
+npm run start
+```
 
-## License
+El servidor quedará disponible en:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```
+http://localhost:3000
+```
+
+---
+
+# 📌 Endpoints principales
+
+---
+
+# 👤 Usuarios
+
+### ➤ Crear usuario
+```
+POST /user/createUser
+```
+
+```json
+{
+  "full_name": "Carlos Ramírez",
+  "email": "carlos.ramirez@edutrack.com",
+  "password": "12345678",
+  "role": "Estudiante"
+}
+```
+
+### ➤ Obtener todos los usuarios
+```
+GET /user
+```
+
+### ➤ Obtener usuario por ID
+```
+GET /user/:id
+```
+
+### ➤ Actualizar usuario
+```
+PATCH /user/:id
+```
+
+### ➤ Eliminar usuario
+```
+DELETE /user/:id
+```
+
+---
+
+# 🎓 Estudiantes
+
+### ➤ Crear estudiante  
+> Requiere un usuario previamente creado.
+
+```
+POST /student/createStudent
+```
+
+```json
+{
+  "nombreCompleto": "Carlos Ramírez",
+  "entryYear": 2022,
+  "userId": "UUID_DEL_USUARIO"
+}
+```
+
+### ➤ Obtener todos los estudiantes
+```
+GET /student
+```
+
+### ➤ Obtener estudiante por ID
+```
+GET /student/:id
+```
+
+### ➤ Actualizar estudiante
+```
+PATCH /student/:id
+```
+
+### ➤ Eliminar estudiante
+```
+DELETE /student/:id
+```
+
+---
+
+# 📝 Notas importantes
+
+- Las contraseñas deben almacenarse encriptadas con **bcrypt**.
+- El proyecto utiliza **UUID v4** como identificadores para usuarios y estudiantes.
+- `synchronize: true` debe usarse solo en desarrollo.
+- Las relaciones entre entidades están gestionadas con TypeORM.
+
+---
+
+# 👨‍💻 Autor
+
+**Juan Duarte**  
+Proyecto Final – Desarrollo Backend con NestJS
