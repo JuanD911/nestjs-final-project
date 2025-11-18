@@ -6,7 +6,7 @@ export class CreateProfessorDto {
 
     @IsOptional()
     @IsString()
-    specialty: string;
+    specialty?: string;
 
     @IsOptional()
     @Type(() => CreateUserDto)
