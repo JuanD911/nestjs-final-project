@@ -10,7 +10,7 @@ export class CreateEnrollmentDto {
     @IsNumber()
     @Min(0)
     @Max(5)
-    grade: number;
+    grade?: number;
 
     @IsNotEmpty()
     @IsUUID()
