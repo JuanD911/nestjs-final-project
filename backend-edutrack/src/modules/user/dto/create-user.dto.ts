@@ -5,11 +5,11 @@ export class CreateUserDto {
 
     @IsString()
     @IsOptional()
-    full_name: string;
+    full_name?: string;
 
     @IsOptional()
     @IsEmail()
-    email: string
+    email?: string
 
     @IsOptional()
     @MinLength(8)
