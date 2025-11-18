@@ -4,19 +4,19 @@ export class CreateCourseDto {
 
     @IsOptional()
     @IsString()
-    name: string;
+    name?: string;
 
     @IsOptional()
     @IsString()
-    description: string;
+    description?: string;
 
     @IsOptional()
     @IsNumber()
     @Min(1)
-    credits: number;
+    credits?: number;
 
     @IsOptional()
     @IsUUID()
     @IsNotEmpty()
-    professor_id: string;
+    professor_id?: string;
 }
