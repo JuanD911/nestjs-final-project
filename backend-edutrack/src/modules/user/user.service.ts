@@ -1,4 +1,4 @@
-import {BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUser } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
@@ -91,7 +91,13 @@ export class UserService {
   }
 
   handlerErrors(error: any) {
-    this.logger.error(error.message);
+    this.logger.error(error);
+
+    if (error.code === '23505') {
+      throw new BadRequestException('Email already exists');
+    }
+
     throw new BadRequestException(error.message);
   }
+
 }
