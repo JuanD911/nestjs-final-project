@@ -1,26 +1,116 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
 import { UpdateEnrollmentDto } from './dto/update-enrollment.dto';
+import { Repository } from 'typeorm';
+import { EnrollmentEntity } from './entities/enrollment.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export class EnrollmentService {
-  create(createEnrollmentDto: CreateEnrollmentDto) {
-    return 'This action adds a new enrollment';
+  private readonly logger = new Logger('EnrollmentService');
+
+  constructor(
+    @InjectRepository(EnrollmentEntity)
+    private readonly enrollmentRepository: Repository<EnrollmentEntity>,
+  ) {}
+
+  async createEnrollment(createEnrollmentDto: CreateEnrollmentDto) {
+    try {
+      const enrollment = this.enrollmentRepository.create(createEnrollmentDto);
+      await this.enrollmentRepository.save(enrollment);
+
+      return {
+        message: 'Enrollment was successfully saved',
+        enrollment,
+      };
+    } catch (error) {
+      this.handlerErrors(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all enrollment`;
+  async findAll() {
+    try {
+      return await this.enrollmentRepository.find();
+    } catch (error) {
+      this.handlerErrors(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} enrollment`;
+  async findOneById(id: string) {
+    if (!isUUID(id)) {
+      throw new BadRequestException('The provided ID is not valid.');
+    }
+
+    try {
+      const enrollment = await this.enrollmentRepository.findOne({
+        where: { id },
+        relations: ['student', 'course']
+      });
+
+      if (!enrollment) {
+        throw new NotFoundException(`Enrollment with id ${id} not found`);
+      }
+
+      return enrollment;
+    } catch (error) {
+      this.handlerErrors(error);
+    }
   }
 
-  update(id: number, updateEnrollmentDto: UpdateEnrollmentDto) {
-    return `This action updates a #${id} enrollment`;
+  async update(id: string, updateEnrollmentDto: UpdateEnrollmentDto) {
+    if (!isUUID(id)) {
+      throw new BadRequestException('The provided ID is not valid.');
+    }
+
+    try {
+      const enrollment = await this.enrollmentRepository.preload({
+        id,
+        ...updateEnrollmentDto,
+      });
+
+      if (!enrollment) {
+        throw new NotFoundException(`Enrollment with id ${id} not found`);
+      }
+
+      await this.enrollmentRepository.save(enrollment);
+
+      return {
+        message: `The Enrollment with id ${id} was successfully updated`,
+        enrollment,
+      };
+    } catch (error) {
+      this.handlerErrors(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} enrollment`;
+  async remove(id: string) {
+    if (!isUUID(id)) {
+      throw new BadRequestException('The provided ID is not valid.');
+    }
+
+    try {
+      const enrollment = await this.enrollmentRepository.findOne({ where: { id } });
+
+      if (!enrollment) {
+        throw new NotFoundException(`Enrollment with id ${id} not found`);
+      }
+
+      await this.enrollmentRepository.remove(enrollment);
+      return `Enrollment with id ${id} has been deleted`;
+    } catch (error) {
+      this.handlerErrors(error);
+    }
+  }
+
+  handlerErrors(error: any) {
+    this.logger.error(error);
+
+    if (error.code === '23505') {
+      throw new BadRequestException('A record with these values already exists (duplicate key).');
+    }
+
+    throw new BadRequestException(error.message || 'Unexpected error occurred.');
   }
 }
+
