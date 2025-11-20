@@ -30,10 +30,12 @@ export class ProfessorService {
         this.handlerErrors(error);
     }
   }
-
   async findAll() {
     try {
-      return await this.ProfessorRepository.find();
+      const professors = await this.ProfessorRepository.find({
+        relations: ['user']
+      });
+      return professors;
     } catch (error) {
       this.handlerErrors(error);
     }
