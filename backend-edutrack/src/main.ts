@@ -16,7 +16,7 @@ async function bootstrap() {
     transform: true,
     transformOptions: { enableImplicitConversion: true },
     exceptionFactory: (errors) => {
-    console.error("🔥 VALIDATION ERRORS:", errors);
+    console.error("VALIDATION ERRORS:", errors);
       return new BadRequestException(errors);
     }
   }));
