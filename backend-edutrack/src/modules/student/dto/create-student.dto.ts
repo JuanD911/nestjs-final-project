@@ -1,14 +1,14 @@
 import { Type } from "class-transformer";
-import { IsNumber, IsObject, IsOptional } from "class-validator";
+import { IsNumber, IsObject, IsOptional, ValidateNested } from "class-validator";
 import { CreateUserDto } from "src/modules/user/dto/create-user.dto";
 
 export class CreateStudentDto {
 
-    @IsOptional()
     @IsNumber()
-    entryYear?: number;
+    @Type(() => Number)
+    entryYear: number;
 
-    @IsOptional()
+    @ValidateNested()
     @Type(() => CreateUserDto)
     user: CreateUserDto;
 
