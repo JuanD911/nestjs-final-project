@@ -33,10 +33,7 @@ export class StudentService {
 
   async findAll() {
     try {
-      const students = await this.StudentRepository.find({
-        relations: ['user']
-      });
-      return students;
+      return await this.StudentRepository.find();
     } catch (error) {
       this.handlerErrors(error);
     }
