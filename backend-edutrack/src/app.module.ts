@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './modules/user/user.module';
 import { CourseModule } from './modules/course/course.module';
 import { ProfessorModule } from './modules/professor/professor.module';
-import { StudentModule } from './modules/student/student.module';
 import { EnrollmentModule } from './modules/enrollment/enrollment.module';
 
 @Module({
@@ -31,8 +30,6 @@ import { EnrollmentModule } from './modules/enrollment/enrollment.module';
     CourseModule,
 
     EnrollmentModule,
-
-    StudentModule,
 
     ProfessorModule,
 

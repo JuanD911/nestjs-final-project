@@ -4,19 +4,15 @@ import { UserTypes } from "../interfaces/userTypes";
 export class CreateUserDto {
 
     @IsString()
-    @IsOptional()
-    full_name?: string;
+    full_name: string;
 
-    @IsOptional()
     @IsEmail()
-    email?: string
+    email: string
 
-    @IsOptional()
     @MinLength(8)
     @IsString()
     password: string;
 
     @IsEnum(UserTypes)
-    @IsOptional()
     role: UserTypes;
 }
