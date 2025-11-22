@@ -23,7 +23,6 @@ import { EnrollmentModule } from './modules/enrollment/enrollment.module';
         password: process.env.DB_PASS,
         autoLoadEntities: true,
         synchronize: true,
-        logging: true,
       }
     ),
 
