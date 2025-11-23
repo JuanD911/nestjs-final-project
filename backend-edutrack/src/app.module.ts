@@ -5,6 +5,7 @@ import { UserModule } from './modules/user/user.module';
 import { CourseModule } from './modules/course/course.module';
 import { ProfessorModule } from './modules/professor/professor.module';
 import { EnrollmentModule } from './modules/enrollment/enrollment.module';
+import { StudentModule } from './modules/student/student.module';
 
 @Module({
   imports: [
@@ -28,8 +29,8 @@ import { EnrollmentModule } from './modules/enrollment/enrollment.module';
     UserModule,
 
     CourseModule,
-
-    EnrollmentModule,
+    
+    StudentModule,
 
     ProfessorModule,
 
