@@ -33,7 +33,9 @@ export class ProfessorService {
 
   async findAll() {
     try {
-      return await this.ProfessorRepository.find();
+      return await this.ProfessorRepository.find({
+        relations: ['user', 'courses']
+      });
     } catch (error) {
       this.handlerErrors(error);
     }
