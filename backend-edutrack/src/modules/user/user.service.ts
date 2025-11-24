@@ -20,6 +20,8 @@ export class UserService {
       const user = this.userRepository.create(createuserDto);
       await this.userRepository.save(user);
 
+      this.logger.log(`User created: ${user}`)
+      
       return {
         message: 'User was successfully saved',
         user,
@@ -66,7 +68,7 @@ export class UserService {
 
     try {
       await this.userRepository.save(user);
-
+      this.logger.log(`User updated: ${user}`)
       return {
         message: `The user with id ${id} was successfully updated`,
         user,
@@ -84,6 +86,7 @@ export class UserService {
 
     try {
       await this.userRepository.remove(user);
+      this.logger.log(`User deleted: ${user}`)
       return `User with id ${id} has been deleted`;
     } catch (error) {
       this.handlerErrors(error);

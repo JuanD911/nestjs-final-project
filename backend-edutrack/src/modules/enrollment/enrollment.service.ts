@@ -20,6 +20,8 @@ export class EnrollmentService {
       const enrollment = this.enrollmentRepository.create(createEnrollmentDto);
       await this.enrollmentRepository.save(enrollment);
 
+      this.logger.log(`Enrollment created: ${enrollment}`)
+
       return {
         message: 'Enrollment was successfully saved',
         enrollment,
@@ -74,6 +76,7 @@ export class EnrollmentService {
       }
 
       await this.enrollmentRepository.save(enrollment);
+      this.logger.log(`Enrollment updated: ${enrollment}`)
 
       return {
         message: `The Enrollment with id ${id} was successfully updated`,
@@ -97,6 +100,7 @@ export class EnrollmentService {
       }
 
       await this.enrollmentRepository.remove(enrollment);
+      this.logger.log(`Enrollment deleted: ${enrollment}`)
       return `Enrollment with id ${id} has been deleted`;
     } catch (error) {
       this.handlerErrors(error);

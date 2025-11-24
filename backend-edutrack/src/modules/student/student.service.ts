@@ -23,6 +23,8 @@ export class StudentService {
       const student = this.StudentRepository.create(createStudentDto);
       await this.StudentRepository.save(student);
 
+      this.logger.log(`Student created: ${student}`)
+
       return {
         message: "Student was succesfully saved", student
       }
@@ -70,6 +72,7 @@ export class StudentService {
 
     try{
       await this.StudentRepository.save(student);
+      this.logger.log(`Student updated: ${student}`)
       return {
         message: `The student with id ${id} was succesfully updated`, student
       }
@@ -86,6 +89,7 @@ export class StudentService {
 
     try {
       await this.StudentRepository.remove(user);
+      this.logger.log(`Student deleted: ${user}`)
       return `Student with id ${id} has been deleted`;
     } catch (error) {
       this.handlerErrors(error);

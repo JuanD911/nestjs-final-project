@@ -20,6 +20,8 @@ export class CourseService {
       const course = this.courseRepository.create(createCourseDto);
       await this.courseRepository.save(course);
 
+      this.logger.log(`Course created: ${course}`)
+
       return {
         message: 'Course was successfully saved',
         course,
@@ -77,6 +79,8 @@ export class CourseService {
 
       await this.courseRepository.save(course);
 
+      this.logger.log(`Course updated: ${course}`)
+
       return {
         message: `The Course with id ${id} was successfully updated`,
         course,
@@ -99,6 +103,7 @@ export class CourseService {
       }
 
       await this.courseRepository.remove(course);
+      this.logger.log(`Course deleted: ${course}`)
       return `Course with id ${id} has been deleted`;
     } catch (error) {
       this.handlerErrors(error);

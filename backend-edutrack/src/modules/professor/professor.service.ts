@@ -23,6 +23,8 @@ export class ProfessorService {
       const professor = this.ProfessorRepository.create(createProfessorDto);
       await this.ProfessorRepository.save(professor);
 
+      this.logger.log(`Professor created: ${professor}`)
+
       return {
         message: "Professor was succesfully saved", professor
       }
@@ -70,6 +72,7 @@ export class ProfessorService {
 
     try{
       await this.ProfessorRepository.save(professor);
+      this.logger.log(`Professor updated: ${professor}`)
       return {
         message: `The Professor with id ${id} was succesfully updated`, professor
       }
@@ -86,6 +89,7 @@ export class ProfessorService {
 
     try {
       await this.ProfessorRepository.remove(user);
+      this.logger.log(`Professor deleted: ${user}`)
       return `Professor with id ${id} has been deleted`;
     } catch (error) {
       this.handlerErrors(error);
