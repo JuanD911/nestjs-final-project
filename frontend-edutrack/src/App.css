@@ -1,0 +1,13 @@
+#root {
+  margin: 0;
+  padding: 0; 
+  max-width: none;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}

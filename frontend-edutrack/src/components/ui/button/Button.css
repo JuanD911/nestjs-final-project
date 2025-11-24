@@ -1,0 +1,22 @@
+button {
+  padding: 10px 20px;
+  background-color:darkslategray;     
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color:darkcyan;       
+  transform: translateY(-2px);     
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,31 @@
+.input-field {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px 14px;
+  border: 2px solid darkslategray;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #000;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: darkcyan;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.input-field:hover {
+  background-color: #f1f1f1;
+}
+
+.input-field::placeholder {
+  color: #888;
+}
+
+label {
+  color: black;
+}
