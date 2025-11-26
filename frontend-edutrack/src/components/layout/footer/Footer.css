@@ -1,0 +1,81 @@
+.app-footer {
+  background-color: var(--color-background);
+  color: var(--color-text);
+
+  box-shadow: 0 -2px 4px var(--color-shadow);
+  padding: 1.5rem 0;   /* ← quitamos el padding horizontal */
+  margin-top: 2rem;
+
+  width: 100%;
+}
+
+.footer-content {
+  max-width: 1200px;    /* ← EL ARREGLO PRINCIPAL */
+  margin: 0 auto;       /* ← centra el contenido */
+  padding: 0 2rem;      /* ← espacio para pantallas grandes */
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-logo {
+  font-size: 1.5rem;
+}
+
+.footer-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.footer-center {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-link {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--color-primary);
+}
+
+.footer-right {
+  text-align: right;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-text {
+  line-height: 1.2rem;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .footer-right {
+    text-align: center;
+  }
+}
