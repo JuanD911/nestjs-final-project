@@ -1,0 +1,51 @@
+.select-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+}
+
+.select-label {
+  min-width: 120px;
+  font-weight: 600;
+  color: var(--color-text);
+  flex-shrink: 0;
+  padding-right: 5px;
+}
+
+.select-field {
+  flex-grow: 1;
+  max-width: none;
+  padding: 10px 14px;
+
+  color: var(--color-text);
+
+  background-color: var(--color-card-bg);
+
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 1rem;
+
+  box-shadow: 0 2px 6px var(--color-shadow);
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  cursor: pointer;
+}
+
+.select-field:focus {
+  border-color: var(--color-primary);
+
+  background-color: var(--color-background);
+
+  box-shadow: 0 4px 10px var(--color-shadow);
+}
+
+.select-field:hover {
+  background-color: var(--color-card-bg);
+  filter: brightness(1.1);
+}
+
+.select-field option {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
