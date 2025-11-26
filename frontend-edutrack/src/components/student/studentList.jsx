@@ -28,7 +28,7 @@ function StudentList() {
     try {
       await deleteStudent(id);
       alert("Estudiante eliminado correctamente");
-      fetchStudents(); 
+      fetchStudents();
     } catch (error) {
       alert("Error eliminando estudiante");
     }
@@ -43,69 +43,98 @@ function StudentList() {
   );
 
   return (
-    <div>
+    <div style={{ padding: "20px", width: "100%" }}>
       <h1>Lista de Estudiantes</h1>
 
+      {/* Search input */}
       <input
         type="text"
         placeholder="Buscar por nombre..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         style={{
-          padding: "8px",
+          padding: "10px",
           width: "300px",
           marginBottom: "20px",
           fontSize: "16px",
-          backgroundColor: "whitesmoke"
+          borderRadius: "8px",
+          border: "2px solid #ccc",
+          backgroundColor: "var(--color-card-bg)",
+          color: "var(--color-text)"
         }}
       />
 
-      <table border="1" cellPadding="10" style={{ width: "100%", marginTop: "20px" }}>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Año de Ingreso</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
+      {filteredStudents.length === 0 ? (
+        <p>No se encontraron estudiantes con ese nombre.</p>
+      ) : (
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            marginTop: "20px",
+            backgroundColor: "var(--color-background)"
+          }}
+        >
+          <thead>
+            <tr style={{ backgroundColor: "var(--color-card-bg)" }}>
+              <th style={thStyle}>Nombre</th>
+              <th style={thStyle}>Email</th>
+              <th style={thStyle}>Año de Ingreso</th>
+              <th style={thStyle}>Acciones</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {filteredStudents.length > 0 ? (
-            filteredStudents.map((student) => (
-              <tr key={student.id}>
-                <td>{student.user?.full_name}</td>
-                <td>{student.user?.email}</td>
-                <td>{student.entryYear}</td>
+          <tbody>
+            {filteredStudents.map((student) => (
+              <tr key={student.id} style={trStyle}>
+                <td style={tdStyle}>{student.user?.full_name}</td>
+                <td style={tdStyle}>{student.user?.email}</td>
+                <td style={tdStyle}>{student.entryYear}</td>
 
-                <td>
-                  <button onClick={() => handleEdit(student.id)}>
+                <td style={tdStyle}>
+                  <button
+                    onClick={() => handleEdit(student.id)}
+                    style={{ marginRight: "10px" }}
+                  >
                     Editar
                   </button>
 
                   <button
                     onClick={() => handleDelete(student.id)}
-                    style={{ marginLeft: "10px", color: "red" }}
+                    style={{ color: "red" }}
                   >
                     Eliminar
                   </button>
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4" style={{ textAlign: "center", padding: "20px" }}>
-                No se encontraron estudiantes con ese nombre.
-              </td>
-            </tr>
-          )}
-        </tbody>
+            ))}
+          </tbody>
+        </table>
+      )}
 
-      </table>
-
-      <BackButton />
+      <div style={{ marginTop: "20px" }}>
+        <BackButton />
+      </div>
     </div>
   );
 }
+
+const thStyle = {
+  padding: "10px",
+  fontWeight: "bold",
+  borderBottom: "2px solid #ccc",
+  textAlign: "left",
+  color: "var(--color-text)"
+};
+
+const trStyle = {
+  borderBottom: "1px solid #ddd"
+};
+
+const tdStyle = {
+  padding: "10px",
+  verticalAlign: "top",
+  color: "var(--color-text)"
+};
 
 export default StudentList;

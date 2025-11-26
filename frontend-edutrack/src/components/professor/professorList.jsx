@@ -28,7 +28,7 @@ function ProfessorList() {
     try {
       await deleteProfessor(id);
       alert("Profesor eliminado correctamente");
-      fetchProfessors(); 
+      fetchProfessors();
     } catch (error) {
       alert("Error eliminando profesor");
     }
@@ -43,7 +43,7 @@ function ProfessorList() {
   );
 
   return (
-    <div>
+    <div style={{ padding: "20px", width: "100%" }}>
       <h1>Lista de Profesores</h1>
 
       <input
@@ -52,60 +52,88 @@ function ProfessorList() {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         style={{
-          padding: "8px",
+          padding: "10px",
           width: "300px",
           marginBottom: "20px",
           fontSize: "16px",
-          backgroundColor: "whitesmoke"
+          borderRadius: "8px",
+          border: "2px solid #ccc",
+          backgroundColor: "var(--color-card-bg)",
+          color: "var(--color-text)"
         }}
       />
 
-      <table border="1" cellPadding="10" style={{ width: "100%", marginTop: "20px" }}>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Especialidad</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
+      {filteredProfessors.length === 0 ? (
+        <p>No se encontraron profesores con ese nombre.</p>
+      ) : (
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            marginTop: "20px",
+            backgroundColor: "var(--color-background)"
+          }}
+        >
+          <thead>
+            <tr style={{ backgroundColor: "var(--color-card-bg)" }}>
+              <th style={thStyle}>Nombre</th>
+              <th style={thStyle}>Email</th>
+              <th style={thStyle}>Especialidad</th>
+              <th style={thStyle}>Acciones</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {filteredProfessors.length > 0 ? (
-            filteredProfessors.map((professor) => (
-              <tr key={professor.id}>
-                <td>{professor.user?.full_name}</td>
-                <td>{professor.user?.email}</td>
-                <td>{professor.specialty}</td>
+          <tbody>
+            {filteredProfessors.map((professor) => (
+              <tr key={professor.id} style={trStyle}>
+                <td style={tdStyle}>{professor.user?.full_name}</td>
+                <td style={tdStyle}>{professor.user?.email}</td>
+                <td style={tdStyle}>{professor.specialty}</td>
 
-                <td>
-                  <button onClick={() => handleEdit(professor.id)}>
+                <td style={tdStyle}>
+                  <button
+                    onClick={() => handleEdit(professor.id)}
+                    style={{ marginRight: "10px" }}
+                  >
                     Editar
                   </button>
 
                   <button
                     onClick={() => handleDelete(professor.id)}
-                    style={{ marginLeft: "10px", color: "red" }}
+                    style={{ color: "red" }}
                   >
                     Eliminar
                   </button>
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4" style={{ textAlign: "center", padding: "20px" }}>
-                No se encontraron profesores con ese nombre.
-              </td>
-            </tr>
-          )}
-        </tbody>
+            ))}
+          </tbody>
+        </table>
+      )}
 
-      </table>
-
-      <BackButton />
+      <div style={{ marginTop: "20px" }}>
+        <BackButton />
+      </div>
     </div>
   );
 }
+
+const thStyle = {
+  padding: "10px",
+  fontWeight: "bold",
+  borderBottom: "2px solid #ccc",
+  textAlign: "left",
+  color: "var(--color-text)"
+};
+
+const trStyle = {
+  borderBottom: "1px solid #ddd"
+};
+
+const tdStyle = {
+  padding: "10px",
+  verticalAlign: "top",
+  color: "var(--color-text)"
+};
 
 export default ProfessorList;
