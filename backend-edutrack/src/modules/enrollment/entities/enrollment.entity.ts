@@ -12,7 +12,10 @@ export class EnrollmentEntity implements Enrollment {
     @Column('date')
     enrollmentDate: string;
 
-    @Column('int')
+    @Column('decimal', {
+        precision: 3,
+        scale: 1
+    })
     grade: number;
 
     @ManyToOne(() => StudentEntity, (student) => student.enrollments)
