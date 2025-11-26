@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from './entities/users.entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isUUID } from 'class-validator';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserService {
@@ -17,7 +18,12 @@ export class UserService {
 
   async createuser(createuserDto: CreateUserDto) {
     try {
-      const user = this.userRepository.create(createuserDto);
+      const hashedPassword = await bcrypt.hash(createuserDto.password, 12);
+
+      const user = this.userRepository.create({
+        ...createuserDto,
+        password: hashedPassword
+      });
       await this.userRepository.save(user);
 
       this.logger.log(`User created: ${user}`)
@@ -92,6 +98,14 @@ export class UserService {
       this.handlerErrors(error);
     }
   }
+
+  async findByEmailWithPassword(email: string) {
+    return await this.userRepository.findOne({
+      where: { email },
+      select: ['id', 'email', 'password', 'role', 'full_name']
+    });
+  }
+
 
   handlerErrors(error: any) {
     this.logger.error(error);
