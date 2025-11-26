@@ -1,4 +1,5 @@
 export enum UserTypes {
     student = "Estudiante",
-    professor = "Profesor"
+    professor = "Profesor",
+    admin = "Admin"
 }
