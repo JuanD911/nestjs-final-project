@@ -13,11 +13,11 @@ const Header = () => {
       </div>
       
       <nav className="main-nav">
-        <a href="../pages/mainPage" className="nav-link">Inicio</a>
+        <a href="../main" className="nav-link">Inicio</a>
         <a href="/students" className="nav-link">Estudiantes</a>
-        <a href="/" className="nav-link">Profesores</a>
-        <a href="/" className="nav-link">Cursos</a>
-        <a href="/" className="nav-link">Inscripciones</a>
+        <a href="/professors" className="nav-link">Profesores</a>
+        <a href="/courses" className="nav-link">Cursos</a>
+        <a href="/enrollments" className="nav-link">Inscripciones</a>
       </nav>
       
       <ToggleButton onToggle={alterTheme} /> 
