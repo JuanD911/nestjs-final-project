@@ -33,7 +33,9 @@ export class EnrollmentService {
 
   async findAll() {
     try {
-      return await this.enrollmentRepository.find();
+      return await this.enrollmentRepository.find({
+        relations: ['student', 'course', 'student.user']
+      });
     } catch (error) {
       this.handlerErrors(error);
     }
