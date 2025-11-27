@@ -18,7 +18,7 @@ export class CourseEntity implements Course {
     @Column('int', {  nullable: true })
     credits: number;
 
-    @ManyToOne(() => ProfessorEntity, (professor) => professor.courses, {nullable: false, onDelete: 'CASCADE'})
+    @ManyToOne(() => ProfessorEntity, (professor) => professor.courses, { onDelete: 'CASCADE'})
     professor: ProfessorEntity;
 
     @OneToMany(() => EnrollmentEntity, (enrollment) => enrollment.course)

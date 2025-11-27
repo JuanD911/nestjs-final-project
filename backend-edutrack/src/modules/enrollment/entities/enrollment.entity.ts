@@ -18,10 +18,10 @@ export class EnrollmentEntity implements Enrollment {
     })
     grade: number;
 
-    @ManyToOne(() => StudentEntity, (student) => student.enrollments)
+    @ManyToOne(() => StudentEntity, (student) => student.enrollments, { onDelete: 'CASCADE'})
     student: StudentEntity;
 
-    @ManyToOne(() => CourseEntity, (course) => course.enrollments)
+    @ManyToOne(() => CourseEntity, (course) => course.enrollments, { onDelete: 'CASCADE'})
     course: CourseEntity;
 
 }
