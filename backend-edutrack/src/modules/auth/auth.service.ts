@@ -19,6 +19,10 @@ export class AuthService {
 
     if (!isValidPassword) throw new UnauthorizedException('Invalid credentials');
 
+    if (user.role !== 'Admin') {
+      throw new UnauthorizedException('Only admin users can access the application');
+    }
+
     const payload = { id: user.id, role: user.role };
 
     return {
