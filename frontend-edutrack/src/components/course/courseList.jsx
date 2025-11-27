@@ -54,6 +54,7 @@ function CourseList() {
                         <tr style={{ backgroundColor: "#eee" }}>
                             <th style={thStyle}>Nombre</th>
                             <th style={thStyle}>Descripción</th>
+                            <th style={thStyle}>Profesor</th>
                             <th style={thStyle}>Créditos</th>
                             <th style={thStyle}>Acciones</th>
                         </tr>
@@ -64,6 +65,11 @@ function CourseList() {
                             <tr key={course.id} style={trStyle}>
                                 <td style={tdStyle}>{course.name}</td>
                                 <td style={tdStyle}>{course.description}</td>
+
+                                <td style={tdStyle}>
+                                    {course.professor?.user?.full_name || "Sin profesor"}
+                                </td>
+
                                 <td style={tdStyle}>{course.credits}</td>
 
                                 <td style={tdStyle}>
