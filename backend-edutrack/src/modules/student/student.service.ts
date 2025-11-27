@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { StudentEntity } from './entities/student.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isUUID } from 'class-validator';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class StudentService {
@@ -12,30 +13,27 @@ export class StudentService {
   private readonly logger = new Logger('StudentService');
 
   constructor(
-
     @InjectRepository(StudentEntity)
-    private readonly StudentRepository: Repository<StudentEntity>
-
+    private readonly studentRepository: Repository<StudentEntity>
   ){}
 
   async createStudent(createStudentDto: CreateStudentDto) {
     try{
-      const student = this.StudentRepository.create(createStudentDto);
-      await this.StudentRepository.save(student);
-
-      this.logger.log(`Student created: ${student}`)
+      const student = this.studentRepository.create(createStudentDto);
+      await this.studentRepository.save(student);
 
       return {
-        message: "Student was succesfully saved", student
-      }
+        message: "Student successfully saved",
+        student
+      };
     } catch(error){
-        this.handlerErrors(error);
+      this.handlerErrors(error);
     }
   }
 
   async findAll() {
     try {
-      return await this.StudentRepository.find({
+      return await this.studentRepository.find({
         relations: ['user', 'enrollments']
       });
     } catch (error) {
@@ -44,59 +42,74 @@ export class StudentService {
   }
 
   async findOneById(id: string) {
-    if(!isUUID(id)) throw new BadRequestException('The search term entered is not a valid ID');
+    if (!isUUID(id)) throw new BadRequestException('Invalid ID');
 
-    try{
-      const student = await this.StudentRepository.findOne({
-        where: {id},
+    try {
+      const student = await this.studentRepository.findOne({
+        where: { id },
         relations: ['user', 'enrollments']
       });
-      
-      if(!student) throw new NotFoundException(`Student with id ${id} not found`);
+
+      if (!student) throw new NotFoundException(`Student with id ${id} not found`);
 
       return student;
-    }catch(error){
-      this.handlerErrors(error.message);
+    } catch (error) {
+      this.handlerErrors(error);
     }
   }
 
-  async update(id: string, updateStudentDto: UpdateStudentDto) {
-    const student = await this.StudentRepository.preload({
-      id: id,
-      ...updateStudentDto
+  async update(id: string, dto: UpdateStudentDto) {
+    const student = await this.studentRepository.findOne({
+      where: { id },
+      relations: ['user']
     });
 
-    if(!student){
+    if (!student)
       throw new NotFoundException(`Student with id ${id} not found`);
+
+    if (dto.entryYear !== undefined)
+      student.entryYear = dto.entryYear;
+
+    if (dto.user) {
+      const { full_name, email, password, role } = dto.user;
+
+      if (full_name !== undefined) student.user.full_name = full_name;
+      if (email !== undefined) student.user.email = email;
+      if (role !== undefined) student.user.role = role;
+
+      if (password !== undefined && password.trim() !== "") {
+        student.user.password = await bcrypt.hash(password, 12);
+      }
     }
 
-    try{
-      await this.StudentRepository.save(student);
-      this.logger.log(`Student updated: ${student}`)
+    try {
+      await this.studentRepository.manager.save(student.user);
+      await this.studentRepository.save(student);
+
       return {
-        message: `The student with id ${id} was succesfully updated`, student
-      }
-    } catch(error){
+        message: `Student updated successfully`,
+        student
+      };
+    } catch (error) {
       this.handlerErrors(error);
-      }
+    }
   }
 
   async remove(id: string) {
-    const user = await this.StudentRepository.findOne({ where: { id } });
+    const student = await this.studentRepository.findOne({ where: { id } });
 
-    if (!user)
+    if (!student)
       throw new NotFoundException(`Student with id ${id} not found`);
 
     try {
-      await this.StudentRepository.remove(user);
-      this.logger.log(`Student deleted: ${user}`)
+      await this.studentRepository.remove(student);
       return `Student with id ${id} has been deleted`;
     } catch (error) {
       this.handlerErrors(error);
     }
   }
 
-  handlerErrors(error: any){
+  handlerErrors(error: any) {
     this.logger.error(error.message);
     throw new BadRequestException(error.message);
   }
