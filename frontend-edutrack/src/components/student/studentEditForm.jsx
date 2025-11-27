@@ -13,9 +13,10 @@ function StudentEditForm() {
     full_name: "",
     email: "",
     password: "",
-    entryYear: "",
-    role: "Estudiante"
+    entryYear: ""
   });
+
+  const [originalData, setOriginalData] = useState(null);
 
   const [loading, setLoading] = useState(true);
 
@@ -23,13 +24,15 @@ function StudentEditForm() {
     try {
       const student = await getStudentById(id);
 
-      setFormData({
+      const initialValues = {
         full_name: student.user.full_name,
         email: student.user.email,
         password: "",
-        entryYear: student.entryYear,
-      });
+        entryYear: student.entryYear
+      };
 
+      setFormData(initialValues);
+      setOriginalData(initialValues);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching student:", error);
@@ -53,15 +56,35 @@ function StudentEditForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updateData = {
-      entryYear: Number(formData.entryYear),
-      user: {
-        full_name: formData.full_name,
-        email: formData.email,
-        ...(formData.password.trim() !== "" && { password: formData.password }),
-        role: "Estudiante"
-      }
-    };
+    if (!originalData) return;
+
+    const updateData = {};
+    const userUpdate = {};
+
+    if (formData.full_name !== originalData.full_name) {
+      userUpdate.full_name = formData.full_name;
+    }
+
+    if (formData.email !== originalData.email) {
+      userUpdate.email = formData.email;
+    }
+
+    if (formData.password.trim() !== "") {
+      userUpdate.password = formData.password;
+    }
+
+    if (formData.entryYear !== originalData.entryYear) {
+      updateData.entryYear = Number(formData.entryYear);
+    }
+
+    if (Object.keys(userUpdate).length > 0) {
+      updateData.user = userUpdate;
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      alert("No se realizaron cambios");
+      return;
+    }
 
     try {
       await updateStudent(id, updateData);
