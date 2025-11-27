@@ -12,7 +12,7 @@ export class StudentEntity implements Student {
     @Column('int')
     entryYear: number;
 
-    @OneToOne(() => UserEntity, (user) => user.student, {onDelete:'CASCADE', cascade: true})
+    @OneToOne(() => UserEntity, (user) => user.student, {onDelete:'CASCADE', cascade: ['insert', 'update'], nullable: false})
     @JoinColumn({name:'id_user'})
     user: UserEntity;
 
