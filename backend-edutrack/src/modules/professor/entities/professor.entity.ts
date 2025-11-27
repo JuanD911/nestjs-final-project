@@ -12,7 +12,7 @@ export class ProfessorEntity implements Professor {
     @Column('text')
     specialty: string;
 
-    @OneToOne(() => UserEntity, (user) => user.professor, {onDelete: "CASCADE", cascade: true, nullable: false})
+    @OneToOne(() => UserEntity, (user) => user.professor, {onDelete: "CASCADE", cascade: ['insert', 'update'], nullable: false})
     @JoinColumn({name:'id_user'})
     user: UserEntity;
 
