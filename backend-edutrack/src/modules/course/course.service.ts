@@ -34,7 +34,7 @@ export class CourseService {
   async findAll() {
     try {
       return await this.courseRepository.find({
-        relations: ['professor', 'enrollments']
+        relations: ['professor', 'enrollments', 'professor.user']
       });
     } catch (error) {
       this.handlerErrors(error);
