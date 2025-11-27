@@ -5,7 +5,7 @@ import Form from "../ui/form/Form";
 import Input from "../ui/input/Input";
 import Button from "../ui/button/Button";
 
-function professorEditForm() {
+function ProfessorEditForm() {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -13,23 +13,25 @@ function professorEditForm() {
     full_name: "",
     email: "",
     password: "",
-    specialty: "",
-    role: "Profesor"
+    specialty: ""
   });
 
+  const [originalData, setOriginalData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchprofessor = async () => {
+  const fetchProfessor = async () => {
     try {
       const professor = await getProfessorById(id);
 
-      setFormData({
+      const initialValues = {
         full_name: professor.user.full_name,
         email: professor.user.email,
         password: "",
-        specialty: professor.specialty,
-      });
+        specialty: professor.specialty
+      };
 
+      setFormData(initialValues);
+      setOriginalData(initialValues);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching professor:", error);
@@ -39,7 +41,7 @@ function professorEditForm() {
   };
 
   useEffect(() => {
-    fetchprofessor();
+    fetchProfessor();
   }, []);
 
   const handleChange = (e) => {
@@ -53,15 +55,35 @@ function professorEditForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updateData = {
-      specialty: formData.entryYear,
-      user: {
-        full_name: formData.full_name,
-        email: formData.email,
-        ...(formData.password.trim() !== "" && { password: formData.password }),
-        role: "Profesor"
-      }
-    };
+    if (!originalData) return;
+
+    const updateData = {};
+    const userUpdate = {};
+
+    if (formData.full_name !== originalData.full_name) {
+      userUpdate.full_name = formData.full_name;
+    }
+
+    if (formData.email !== originalData.email) {
+      userUpdate.email = formData.email;
+    }
+
+    if (formData.password.trim() !== "") {
+      userUpdate.password = formData.password;
+    }
+
+    if (formData.specialty !== originalData.specialty) {
+      updateData.specialty = formData.specialty;
+    }
+
+    if (Object.keys(userUpdate).length > 0) {
+      updateData.user = userUpdate;
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      alert("No se realizaron cambios");
+      return;
+    }
 
     try {
       await updateProfessor(id, updateData);
@@ -127,4 +149,4 @@ function professorEditForm() {
   );
 }
 
-export default professorEditForm;
+export default ProfessorEditForm;
