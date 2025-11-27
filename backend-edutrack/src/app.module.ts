@@ -7,6 +7,9 @@ import { ProfessorModule } from './modules/professor/professor.module';
 import { EnrollmentModule } from './modules/enrollment/enrollment.module';
 import { StudentModule } from './modules/student/student.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 @Module({
   imports: [
@@ -39,5 +42,18 @@ import { AuthModule } from './modules/auth/auth.module';
 
     AuthModule
   ],
+
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AdminGuard
+    },
+  ],
+
 })
+
 export class AppModule {}
