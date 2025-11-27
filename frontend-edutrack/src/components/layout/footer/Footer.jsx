@@ -10,13 +10,6 @@ const Footer = () => {
           <span className="footer-title">EduTrack</span>
         </div>
 
-        <div className="footer-center">
-          <a href="/students" className="footer-link">Estudiantes</a>
-          <a href="/professors" className="footer-link">Profesores</a>
-          <a href="/courses" className="footer-link">Cursos</a>
-          <a href="/enrollments" className="footer-link">Inscripciones</a>
-        </div>
-
         <div className="footer-right">
           <span className="footer-text">© {new Date().getFullYear()} EduTrack</span>
           <span className="footer-text">Todos los derechos reservados</span>
