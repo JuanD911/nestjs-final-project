@@ -24,10 +24,9 @@ export class UserService {
         ...createuserDto,
         password: hashedPassword
       });
+
       await this.userRepository.save(user);
 
-      this.logger.log(`User created: ${user}`)
-      
       return {
         message: 'User was successfully saved',
         user,
@@ -63,20 +62,29 @@ export class UserService {
     }
   }
 
-  async update(id: string, updateuserDto: UpdateUser) {
-    const user = await this.userRepository.preload({
-      id,
-      ...updateuserDto,
-    });
+  async update(id: string, updateUserDto: UpdateUser) {
+    const user = await this.userRepository.findOne({ where: { id } });
 
     if (!user)
       throw new NotFoundException(`User with id ${id} not found`);
 
+    if (updateUserDto.full_name !== undefined)
+      user.full_name = updateUserDto.full_name;
+
+    if (updateUserDto.email !== undefined)
+      user.email = updateUserDto.email;
+
+    if (updateUserDto.role !== undefined)
+      user.role = updateUserDto.role;
+
+    if (updateUserDto.password) {
+      user.password = await bcrypt.hash(updateUserDto.password, 12);
+    }
+
     try {
       await this.userRepository.save(user);
-      this.logger.log(`User updated: ${user}`)
       return {
-        message: `The user with id ${id} was successfully updated`,
+        message: `User updated successfully`,
         user,
       };
     } catch (error) {
@@ -92,7 +100,6 @@ export class UserService {
 
     try {
       await this.userRepository.remove(user);
-      this.logger.log(`User deleted: ${user}`)
       return `User with id ${id} has been deleted`;
     } catch (error) {
       this.handlerErrors(error);
@@ -106,7 +113,6 @@ export class UserService {
     });
   }
 
-
   handlerErrors(error: any) {
     this.logger.error(error);
 
@@ -116,5 +122,4 @@ export class UserService {
 
     throw new BadRequestException(error.message);
   }
-
 }
