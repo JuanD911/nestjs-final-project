@@ -1,16 +1,110 @@
-# React + Vite
+# Proyecto EduTrack – Frontend React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend desarrollado en **React + Vite** para la plataforma académica **EduTrack**, que permite gestionar:
 
-Currently, two official plugins are available:
+- Usuarios  
+- Estudiantes  
+- Profesores  
+- Cursos  
+- Inscripciones  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este frontend consume el backend implementado en **NestJS**.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tecnologías utilizadas
 
-## Expanding the ESLint configuration
+- **React** (Librería principal)
+- **Vite** (Empaquetador rápido)
+- **React Router DOM** (Rutas y navegación)
+- **Context API** (Gestión de estado global)
+- **Fetch API / Axios** (Consumo del backend)
+- **CSS Modules / CSS Global** (Estilos)
+- **ESLint** (Buenas prácticas)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Requisitos previos
+
+Antes de ejecutar el proyecto asegúrate de tener instalado:
+
+- Node.js (>= 18)
+- npm (>= 9)
+- Un navegador moderno
+- Backend NestJS ejecutándose en local o remoto
+
+---
+
+## Instalación del proyecto
+
+### Clonar el repositorio
+
+```bash
+git clone <URL-DEL-REPOSITORIO>
+cd frontend-edutrack/
+```
+
+### Instalar dependencias
+
+```bash
+npm install
+```
+
+---
+
+
+## Estructura del proyecto
+
+```
+src/
+│── components/      # Componentes reutilizables
+│── pages/           # Páginas principales
+│── services/        # Conexión con la API
+│── App.jsx          # Enrutamiento principal
+│── main.jsx         # Punto de entrada
+```
+
+---
+
+## Scripts disponibles
+
+### Modo desarrollo
+```
+npm run dev
+```
+App disponible en:
+```
+http://localhost:5173
+```
+
+## Conexión con el backend
+
+Ejemplo:
+
+```js
+const response = await fetch(`http://localhost:3000/students`);
+```
+
+---
+
+## Funcionalidades implementadas
+
+### ✔ Gestión de estudiantes  
+### ✔ Gestión de profesores  
+### ✔ Gestión de cursos  
+### ✔ Gestión de inscripciones  
+### ✔ Login y autenticación  
+### ✔ Interfaz responsiva  
+
+---
+
+## Notas importantes
+
+- El backend debe estar corriendo.
+
+---
+
+# Autor
+
+**Juan David Duarte**  
+Proyecto Final – Desarrollo Frontend con React
